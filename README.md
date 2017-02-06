@@ -2,7 +2,7 @@
 
 To use the package, paste the following in R.
   
-	install.package("devtools")
+	install.packages("devtools")
   
 	devtools::install_github("mdijkstracpb/tsview")
 	
