@@ -3,8 +3,6 @@
 ## Developers only:
 To edit source of this package, paste the following in R
   
-  install.package(c("devtools", "packrat"))
+  install.package("devtools")
   
   install_github("mdijkstracpb/tsview")
-  
-  packrat::restore()
