@@ -7,7 +7,7 @@ prettyTime = function(time.label, format = F)
 	q3.index = which(time.label -  .50 == time.label.floor)
 	q4.index = which(time.label -  .75 == time.label.floor)
 
-	addQ = function(year, q) 
+	addQ = function(year, q)
 	{
 		paste0(if (format) "<B>", year, if (format) '</B><font face="verdana" color="green">', q, if (format) '</font>')
 	}

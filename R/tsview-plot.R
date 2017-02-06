@@ -1,3 +1,7 @@
+#' @importFrom grDevices dev.flush dev.hold xy.coords
+#' @importFrom graphics axis box legend lines lines.default mtext par plot.default plot.new plot.window text title
+#' @importFrom stats as.ts hasTsp is.ts rnorm time ts ts.intersect tsp
+
 tsview_plot = function (x, y = NULL, plot.type = c("multiple", "single"), lwd = 3, xy.labels,
 											xy.lines, panel = lines, nc, yax.flip = FALSE,
 											mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
@@ -17,7 +21,7 @@ tsview_plot = function (x, y = NULL, plot.type = c("multiple", "single"), lwd = 
 	axis.cex			= 2
 	axis.x.padj		= .5
 	show.main			= F
-	ts.col				= brewer.pal(12, "Paired")[1:x.n]
+	ts.col				= RColorBrewer::brewer.pal(12, "Paired")[1:x.n]
 	name.col			= ts.col
 	ts.lty				= 1:x.n
 	mar.single		= c(2.5, 8, 1, 15)

@@ -1,5 +1,5 @@
 body {
-  font-family:'Helvetica', sans-serif; 
+  font-family:'Helvetica', sans-serif;
 }
 
 /* ON-OFF switch button */
@@ -11,7 +11,7 @@ body {
   width: 110px;
   position: relative;
   -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-  font-family:'Helvetica', sans-serif; 
+  font-family:'Helvetica', sans-serif;
 }
 .onoffswitch-checkbox {
   display: none;
@@ -47,7 +47,7 @@ body {
   position: absolute; top: 0; bottom: 0;
   border-radius: 30px;
   right: 66px;
-  transition: all 0.3s ease-in 0s; 
+  transition: all 0.3s ease-in 0s;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
   right: 0px;
@@ -70,7 +70,7 @@ body {
   border: 2px solid #FFFFFF;
 }
 
-/* GreyBlue */ 
+/* GreyBlue */
 .GreyBlue .onoffswitch-inner:before {
   background-color: #FFFFFF; color: #428bca;
 }
@@ -109,4 +109,13 @@ body {
 
 .TrueFalse .onoffswitch-inner:after {
   content: "Multiple";
+}
+
+/* md */
+table th, table td {
+   text-align: left;
+}
+
+table th + th, table td + td {
+   text-align: right;
 }

@@ -1,7 +1,7 @@
 Package: tsview
 Type: Package
 Title: Time series viewer
-Version: 2017.1.25
+Version: 2017.2.6
 Author: mdijkstra
 Maintainer: M. Dijkstra <m.dijkstra.cpb@gmail.com>
 Description: Time series viewer.
@@ -9,5 +9,3 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
-Depends: R (>= 3.3.2)
-Imports: shiny, RColorBrewer

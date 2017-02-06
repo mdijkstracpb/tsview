@@ -1,34 +1,35 @@
-#' @title View time series in browser
+#' @title Plotting Time Series Objects (in Browser)
 #' @name tsview
-#' @param x time series object, usually inheriting from class "ts".
-#' @param plot.type for multivariate time series. \code{multiple} means each series has its own y-axis, \code{single} means all series share one and the same y-axis.
-#' @param gui if gui == FALSE time series are shown in a regular plot. Else, if gui == TRUE, plots are shown in a gui.
-#' @description Plotting method for objects inheriting from class "ts".
+#' @description Plotting method for objects inheriting from class "\code{ts}".
+#' @param x time series object, usually inheriting from class "\code{ts}".
+#' @param plot.type for multivariate time series. \code{multiple} displays each series separately (with a common time axis), \code{single} displays all series in the same plot.
+#' @param gui if gui = FALSE time series are shown in a regular plot. Else, if gui = TRUE, plots are shown in a gui (c.q. your default web browser).
 #' @examples
-#' z = ts(matrix(rnorm(150), 30, 5), start = c(1961, 1), frequency = 4) # 5 time series
-#' tsview(z, "single")
-#' @import RColorBrewer
-#' @import shiny
+#' x = ts(matrix(rnorm(150), 30, 5), start = c(1961, 1), frequency = 4) # 5 time series
+#'
+#' tsview(x, "single")
+#' tsview(x, "multiple")
+#'
+#' \dontrun{
+#' tsview(x, gui = TRUE)
+#' }
+#' @seealso \code{\link{ts}, \link{grepl}}
 #' @export
 
 tsview = function(x = ts(matrix(rnorm(150), 30, 5), start = c(1961, 1), frequency = 4), plot.type = "multiple", gui = FALSE)
 {
-  install.and.source.dependency("RColorBrewer")
+  .install.if.not.installed("RColorBrewer")
 
   if (gui)
 	{
-	  install.and.source.dependency("shiny")
-    install.and.source.dependency("DT")
+    .install.if.not.installed("shiny")
+    .install.if.not.installed("DT")
 
-    # Make data publicly available (FIX: this shoudn't be done via global env)
-    .tsview.shiny.x <<- x
-    .tsview.shiny.x.names <<- colnames(.tsview.shiny.x)
-
-    app.dir = system.file("shiny-app", package = "tsview")
-    runApp(app.dir, launch.browser = T)
+    shiny::runApp(list(server=.wrapped_server(x), ui=.ui), launch.browser = T)
 	}
 	else
 	{
 	  tsview_plot(x, plot.type = plot.type)
 	}
 }
+
