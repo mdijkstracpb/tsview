@@ -6,4 +6,4 @@ To use the package, paste the following in R.
   
 	devtools::install_github("mdijkstracpb/tsview")
 	
-And type `tsview(gui = T)` for a demo.
+And type `tsview(gui = T)` for a demo..
