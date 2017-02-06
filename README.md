@@ -2,7 +2,7 @@
 
 To use the package, paste the following in R.
   
-	install.packages("devtools")
+	install.packages("devtools", repos = "http://cran-mirror.cs.uu.nl/")
   
 	devtools::install_github("mdijkstracpb/tsview")
 	
