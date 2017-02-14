@@ -1,5 +1,3 @@
-getResource = function(file.name) paste0("shiny-app/www/", file.name)
-
 .ui = shiny::fluidPage(theme = getResource("button.css"),
                   shiny::tags$head(shiny::tags$style(".rightAlign{float:right;}")),
                   shiny::titlePanel(title=shiny::div(shiny::img(src=getResource("cpb-logo.png")), "Time series viewer")),
@@ -16,7 +14,8 @@ getResource = function(file.name) paste0("shiny-app/www/", file.name)
                     ),
 
 						shiny::mainPanel(
-						  shiny::div(title="Slide to zoom x-axis", shiny::sliderInput("timeRange", "", min = NA, max = NA, value = c(NA, NA), animate = T, width = "70%", sep="", round = T), align = "middle"),
+						  shiny::div(title="Slide to zoom x-axis", shiny::sliderInput("timeRange", NULL, min = NA, max = NA, value = c(NA, NA), animate = T, width = "70%", sep="", step = .25), align = "middle"),
+						  shiny::checkboxGroupInput("versions", NULL, NULL, inline = T),
 						  shiny::tabsetPanel(type = "tabs",
 						                     shiny::tabPanel("Plot",
                                            switchButton(inputId = "switch.plot.type", label = "", value = F, col = "GB", type = "TF"),
@@ -30,7 +29,10 @@ getResource = function(file.name) paste0("shiny-app/www/", file.name)
                                            DT::dataTableOutput("table")
                                            # htmlOutput("helpTextTable")
 #                                           tags$head(tags$style("#helpTextTable{color: lightgray;}"))
-                                  )
+                                  ),
+								  			shiny::tabPanel("Info",
+								  			DT::dataTableOutput("info")
+								  )
                       )
 
                     )
