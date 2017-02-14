@@ -1,7 +1,7 @@
 Package: tsview
 Type: Package
 Title: Time series viewer
-Version: 2017.2.6
+Version: 2017.2.14
 Author: mdijkstra
 Maintainer: M. Dijkstra <m.dijkstra.cpb@gmail.com>
 Description: Time series viewer.

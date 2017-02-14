@@ -8,7 +8,6 @@ tsview_plot = function (x, plot.type = c("multiple", "single"), show.names = NUL
 											oma.multi = c(6, 0, 5, 0), cex.axis = text.size, axes = TRUE, frame.plot = FALSE, ...)
 {
 	#.install.if.not.installed("RColorBrewer")
-
 	if (!is.list(x)) x = list(x)
 	stopifnot(length(x) < 10)
 
@@ -40,7 +39,11 @@ tsview_plot = function (x, plot.type = c("multiple", "single"), show.names = NUL
 	#axis.cex			= 2
 	axis.x.padj			= .5
 	show.main			= F
-	ts.col				= c("#1B9E77", "#BEAED4", "#FDC086", "#FFFF99", "#386CB0", "#F0027F", "#A6CEE3", "#E6AB02", "gray80", "#E31A1C", "mediumorchid1", "seagreen1")[1:n.show.names]#RColorBrewer::brewer.pal(12, "Paired")[1+1:n.show.names]
+	
+	ts.col				= c("#1B9E77", "#BEAED4", "#FDC086", "#FFFF99", "#386CB0", "#F0027F", "#A6CEE3", "#E6AB02", "gray80", "#E31A1C", "mediumorchid1", "seagreen1")#[1:n.show.names]#RColorBrewer::brewer.pal(12, "Paired")[1+1:n.show.names]
+	ts.col 				= rep(ts.col, ceiling(ncol(x) / length(ts.col)))[1:ncol(x)]
+	ts.col				= ts.col[ x.names %in% show.names ]
+	
 	name.col			= if (plot.type == "multiple") rep(axis.col, n.show.names) else ts.col
 	#ts.lty				= 1:x.n # lty == show.versions
 	mar.single			= c(2.5, 6, 0, 7.5 * text.size)
@@ -178,7 +181,7 @@ tsview_plot = function (x, plot.type = c("multiple", "single"), show.names = NUL
 				}
 
 				if (ann) {
-					legend("topright", x.names[i], cex = text.size, text.col = name.col[i], text.font = 3, bty = "n")
+					legend("topright", show.names[i], cex = text.size, text.col = name.col[i], text.font = 3, bty = "n")
 					#mtext(nm[i], y.side, line = 3, cex = cex.lab, col = col.lab, font = font.lab, ...) # MD: no longer outside
 					if (show.xlab && do.xax) mtext(xlab, side = 1, line = 3, cex = cex.lab, col = col.lab, font = font.lab, ...)
 				}				
