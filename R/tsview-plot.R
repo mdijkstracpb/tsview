@@ -244,6 +244,15 @@ tsview_plot = function (x, plot.type = c("multiple", "single"), show.names = NUL
 										ylabel = NULL, axes = axes, frame.plot = frame.plot, ...)
 }
 
+# setwd('~/Dropbox/cpb/git/tsview/R/')
+# source("ext-switch-button.R")
+# source("import.R")
+# source("server.R")
+# source("shared-functions.R")
+# source("ts-helper.R")
+# source("tsplot.R")
+#
+# tsview_plot(x = ts(1))
 #x = ts(matrix(rnorm(150), 30, 5), start = c(1961, 1), frequency = 4)
 #l = list(a = x, b = x + 1)
 #source('ts-helper.R')

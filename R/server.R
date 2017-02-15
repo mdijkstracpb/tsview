@@ -12,45 +12,54 @@ getDataPath = function(file.name) paste0(system.file("shiny-app", package = "tsv
 		#     })
 
 observe({
-	
 	query = parseQueryString(session$clientData$url_search)		
 	if (!is.null(query$file))
 	{
 		file.path = getDataPath(query$file)
 		if (file.exists(file.path))	x = dget(file.path)
 	}
-			
+
+	start.empty = is.null(x)
+	
 	# FIX: this is ugly
 	if (!is.list(x))
 	{
 		x = list("Current" = x)
 	}	
-	
-	# If list elts have no name, give them names
-	if (is.null(names(x)))
-	{
-		names(x) = letters[1:length(x)]
-	}
-	index.no.name = which(is.na(names(x)) | "" == names(x))
-	if (0 < length(index.no.name))
-	{
-		names(x)[index.no.name] = letters[index.no.name]
-	}
 
-	x.lst = x
-	x = .tsview.lst.as.ts(lst = x) # from now on x is matrix
-
-	#x.versions	= unique( .tsview.get.index.from.name(x.names) )
-    #if (is.null(x.names)) x.names = paste("Series", 1:ncol(x))
-
-	x.names		= unique( .tsview.get.ts.names(x) )
-	timeRange	= timeRange.select = range(time(x))
-	if (!is.null(query$x))
+	if (start.empty)
 	{
-		timeRange.select.test = as.numeric(unlist(strsplit(query$x,",")))
-		if (2 == length(timeRange.select.test) && all(is.finite(timeRange.select.test))) timeRange.select = timeRange.select.test
+		x.names = NULL
+		x.lst = x
 	}
-    updateSliderInput(session, "timeRange", min = timeRange[1], max = timeRange[2], value = timeRange.select)
+	else
+	{	
+		# If list elts have no name, give them names
+		if (is.null(names(x)))
+		{
+			names(x) = letters[1:length(x)]
+		}
+		index.no.name = which(is.na(names(x)) | "" == names(x))
+		if (0 < length(index.no.name))
+		{
+			names(x)[index.no.name] = letters[index.no.name]
+		}
+
+		x.lst = x
+		x = .tsview.lst.as.ts(lst = x) # from now on x is matrix
+
+		#x.versions	= unique( .tsview.get.index.from.name(x.names) )
+	    #if (is.null(x.names)) x.names = paste("Series", 1:ncol(x))
+
+		x.names		= unique( .tsview.get.ts.names(x) )
+		timeRange	= timeRange.select = range(time(x))
+		if (!is.null(query$x))
+		{
+			timeRange.select.test = as.numeric(unlist(strsplit(query$x,",")))
+			if (2 == length(timeRange.select.test) && all(is.finite(timeRange.select.test))) timeRange.select = timeRange.select.test
+		}
+	    updateSliderInput(session, "timeRange", min = timeRange[1], max = timeRange[2], value = timeRange.select)
+	}		
 
 	add.prefix.to.version = function(x.lst)
 	{
@@ -200,13 +209,16 @@ observe({
 		x.name	= NULL
 		x.lab	= NULL
 
-		for (i in 1:length(x.lst))
+		if (!start.empty && "regts" %in% rownames(installed.packages()))
 		{
-			this.labels = ts_labels(x.lst[[i]])
-			if (!is.null(this.labels))
+			for (i in 1:length(x.lst))
 			{
-				x.name = c(x.name, colnames(x.lst[[i]]))
-				x.lab = c(x.lab, this.labels)
+				this.labels = regts::ts_labels(x.lst[[i]])
+				if (!is.null(this.labels))
+				{
+					x.name = c(x.name, colnames(x.lst[[i]]))
+					x.lab = c(x.lab, this.labels)
+				}
 			}
 		}
 		
