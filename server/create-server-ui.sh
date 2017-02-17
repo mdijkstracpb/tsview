@@ -35,3 +35,6 @@ for f in ${R_main_files[@]}
 do
   cat source-these-files.R.help ${f}.original > ${f}
 done
+
+# Give our 'wrapped server' the shiny server
+echo "shiny::shinyServer(.wrapped_server(NULL))" >> server.R
