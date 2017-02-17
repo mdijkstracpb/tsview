@@ -12,7 +12,7 @@ getDataPath = function(file.name) paste0(system.file("shiny-app", package = "tsv
 		#     })
 
 observe({
-	query = parseQueryString(session$clientData$url_search)		
+	query = shiny::parseQueryString(session$clientData$url_search)		
 	if (!is.null(query$file))
 	{
 		file.path = getDataPath(query$file)
