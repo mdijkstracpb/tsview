@@ -1,5 +1,3 @@
-.tsview.shiny.table.decimals = 3
-
 getDataPath = function(file.name) paste0(system.file("shiny-app", package = "tsview"), "/data/", file.name)
 
 .wrapped_server = function(x)
