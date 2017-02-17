@@ -1,5 +1,5 @@
 #' @importFrom utils install.packages installed.packages
-#'
+
 getResource = function(file.name) paste0("shiny-app/www/", file.name)
 
 .tsview.lst.as.ts = function(lst, version.prefix = " (", version.postfix = ")")
