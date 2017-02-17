@@ -13,9 +13,9 @@ current_hash=`git ls-remote http://github.com/mdijkstracpb/tsview.git refs/heads
 # install package
 R -e 'devtools::install_github("mdijkstracpb/tsview")'
 
+# get and run updated script that downloads R-files and create server and ui
 wget https://raw.githubusercontent.com/mdijkstracpb/tsview/master/server/create-server-ui.sh
-
-# download R-files and create server and ui
-sh ./create-server-ui.sh
+chmod +x create-server-ui.sh
+./create-server-ui.sh
 
 # reboot shiny server?
