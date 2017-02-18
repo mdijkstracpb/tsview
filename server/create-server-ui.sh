@@ -12,7 +12,7 @@ tsview-settings.R
 tsview-tsplot.R
 tsview-tsview.R"
 
-# download ui and server
+# download server and ui
 for f in ${R_main_files[@]}
 do
 	wget -O ${f}.original ${base_url}$f
@@ -24,7 +24,8 @@ do
 	wget ${base_url}$f
 done
 
-rm source-these-files.R.help
+# make source file for server and ui
+> source-these-files.R.help
 for each in *.R
 do
   echo "source(\"$each\")" >> source-these-files.R.help
