@@ -17,4 +17,4 @@ wget https://raw.githubusercontent.com/mdijkstracpb/tsview/master/server/create-
 bash create-server-ui.sh
 
 # reboot shiny server?
-sudo reload shiny-server
+#sudo reload shiny-server
