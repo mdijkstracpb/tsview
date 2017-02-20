@@ -16,10 +16,13 @@ if [ "$last_hash" = "$current_hash" ]; then
   echo "************************************"
 
   exit 0;
-else
-  # update hash
-  echo $current_hash > last.hash
 fi
+
+# update hash
+echo $current_hash > last.hash
+
+# remove all except hash and log dir
+rm *.R* create-server-ui.sh
 
 # install package
 R -e 'devtools::install_github("mdijkstracpb/tsview")'
