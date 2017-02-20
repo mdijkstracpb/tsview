@@ -34,7 +34,7 @@
 				        	  			  			  DT::dataTableOutput("info")
 								                  ),
                                   shiny::tabPanel(shiny::div(shiny::img(src=getResource("share.png"), height="18px"),"Share"),
-								    shiny::div(shiny::verbatimTextOutput("queryText"), align = "middle")
+								    shiny::verbatimTextOutput("queryText")
                                     # shiny::img(src=getResource("share_coll.jpg"))
                                   )
                       )
