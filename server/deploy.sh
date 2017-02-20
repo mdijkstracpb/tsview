@@ -8,6 +8,13 @@ current_hash=`git ls-remote http://github.com/mdijkstracpb/tsview.git refs/heads
 
 if [ "$last_hash" = "$current_hash" ]; then
   # exit if no difference
+
+  echo "************************************"
+  echo "***                              ***"
+  echo "***   STILL UP-TO-DATE           ***"
+  echo "***                              ***"
+  echo "************************************"
+
   exit 0;
 else
   # update hash
