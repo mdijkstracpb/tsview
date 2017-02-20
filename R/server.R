@@ -1,3 +1,5 @@
+.tsview.shiny.table.decimals = 3
+
 getDataPath = function(file.name) paste0(system.file("shiny-app", package = "tsview"), "/data/", file.name)
 
 .wrapped_server = function(x)
@@ -10,7 +12,7 @@ getDataPath = function(file.name) paste0(system.file("shiny-app", package = "tsv
 		#     })
 
 observe({
-	query = shiny::parseQueryString(session$clientData$url_search)		
+	query = shiny::parseQueryString(session$clientData$url_search)
 	if (!is.null(query$file))
 	{
 		file.path = getDataPath(query$file)
@@ -18,12 +20,12 @@ observe({
 	}
 
 	start.empty = is.null(x)
-	
+
 	# FIX: this is ugly
 	if (!is.list(x))
 	{
 		x = list("Current" = x)
-	}	
+	}
 
 	if (start.empty)
 	{
@@ -31,7 +33,7 @@ observe({
 		x.lst = x
 	}
 	else
-	{	
+	{
 		# If list elts have no name, give them names
 		if (is.null(names(x)))
 		{
@@ -56,8 +58,8 @@ observe({
 			timeRange.select.test = as.numeric(unlist(strsplit(query$x,",")))
 			if (2 == length(timeRange.select.test) && all(is.finite(timeRange.select.test))) timeRange.select = timeRange.select.test
 		}
-	    updateSliderInput(session, "timeRange", min = timeRange[1], max = timeRange[2], value = timeRange.select)
-	}		
+	    shiny::updateSliderInput(session, "timeRange", min = timeRange[1], max = timeRange[2], value = timeRange.select)
+	}
 
 	add.prefix.to.version = function(x.lst)
 	{
@@ -66,20 +68,18 @@ observe({
 
     NewPlot = function(A) renderPlot({
       plot.type = if (input$switch.plot.type) "single" else "multiple"
-	  
+
 	  if (1 < length(x.lst))
 	  {
 		  # we deal with versions
 		  show.versions = which(add.prefix.to.version(x.lst) %in% input$versions)
 	  }
 	  else show.versions = NULL
-		  
+
 
       if (0 < length(A))
       {
-		  #a <<- tsview.shiny.x.zoom()
-		  #b <<- A
-		  tsview_plot(x.lst, plot.type = plot.type, lwd = 8, show.names = A, time.range = input$timeRange, show.versions = show.versions, text.size = 2)
+  		  tsview_plot(x.lst, plot.type = plot.type, lwd = 8, show.names = A, time.range = input$timeRange, show.versions = show.versions, text.size = 2)
       }
     })
 
@@ -100,11 +100,11 @@ observe({
 		if (1 < length(x.lst))
 		{
 			show.versions = which(add.prefix.to.version(x.lst) %in% input$versions)
-			i.version	= .tsview.get.version.from.index(x, index.col) # these versions we have	
+			i.version	= .tsview.get.version.from.index(x, index.col) # these versions we have
 			index.col	= index.col[which(i.version %in% show.versions)]
-			
+
 			if (0 == length(index.col)) return( data.frame() )
-		}  
+		}
 
 		ts.table = tsview.shiny.x.zoom()[, index.col, drop = F]
 
@@ -148,10 +148,10 @@ observe({
 		}
 		else
 		{
-			index = as.numeric(unlist(strsplit(query$sel,",")))			
+			index = as.numeric(unlist(strsplit(query$sel,",")))
 			this.selected = x.names[index]
 		}
-		
+
 		this.selected
 	}
 
@@ -172,7 +172,7 @@ observe({
 
     observeEvent(input$filter.query, {
       ts.name.1 = x.names[grepl(input$filter.query, x.names)]
-	  updateSelectInput(session, "A", choices = ts.name.1, selected = if (is.null(input$A)) select.init() else input$A)	
+	  updateSelectInput(session, "A", choices = ts.name.1, selected = if (is.null(input$A)) select.init() else input$A)
     })
 
     observeEvent(input$timeRange, {
@@ -188,11 +188,11 @@ observe({
 		}
 		else
 		{
-			index = as.numeric(unlist(strsplit(query$v,",")))			
-		}	
+			index = as.numeric(unlist(strsplit(query$v,",")))
+		}
 	    updateCheckboxGroupInput(session, "versions", choices = add.prefix.to.version(x.lst), selected = add.prefix.to.version(x.lst)[index], inline = T)
 	}
-	
+
     observeEvent(input$versions, {
         output$plot = NewPlot(input$A)
         output$table = NewTable(input$A)
@@ -201,7 +201,7 @@ observe({
     observeEvent(input$switch.plot.type, {
       output$plot = NewPlot(input$A)
     })
-	
+
 	NewInfoTable = function()
 	{
 		x.name	= NULL
@@ -219,13 +219,13 @@ observe({
 				}
 			}
 		}
-		
+
 		tdf = suppressWarnings(unique(data.frame(cbind("Time series" = x.name, "Description" = x.lab))))
 		rownames(tdf) = NULL
-		
+
 		DT::renderDataTable(DT::datatable(tdf, options = list(autoWidth = F), rownames= FALSE))
 	}
-	
+
 	output$info = NewInfoTable()
 
     output$downloadData <- downloadHandler(
@@ -236,15 +236,54 @@ observe({
     )
 
 	output$queryText <- shiny::renderText({
-		query <- shiny::parseQueryString(session$clientData$url_search)
-	    # Return a string with key-value pairs
-	    paste(names(query), query, sep = "=", collapse=", ")
+		query = shiny::parseQueryString(session$clientData$url_search)
+    # Return a string with key-value pairs
+		protocol = session$clientData$url_protocol
+		hostname = session$clientData$url_hostname
+		port     = session$clientData$url_port
+		pathname = session$clientData$url_pathname
+
+		# create base url
+		share.url = paste0(protocol, hostname, ":", port, pathname)
+
+		url.keys = list()
+
+		# add file
+		if (!is.null(query$file)) url.keys[[1]] = paste0("file=", query$file)
+
+		# add selected
+		url.selected = which(x.names %in% input$A)
+		if (0 < length(url.selected)) url.keys[[2]] = paste0("selected=", paste(url.selected, collapse=","))
+
+		# add x
+		url.keys[[3]] = paste0("x=", paste(input$timeRange, collapse=","))
+
+		# add version
+		if (1 < length(x.lst))
+		{
+		  # we deal with versions
+		  show.versions = which(add.prefix.to.version(x.lst) %in% input$versions)
+		}
+		else show.versions = NULL
+    if (!is.null(show.versions)) url.keys[[4]] = paste0("versions=", paste(show.versions, collapse=","))
+
+		url.sep = "?"
+		for (i in 1:length(url.keys))
+		{
+		  if (!is.null(url.keys[[i]]))
+		  {
+		    share.url = paste0(share.url, url.sep, url.keys[[i]])
+		    url.sep = "&"
+		  }
+		}
+
+		share.url
 	})
-	
+
     # output$helpTextTable <- renderUI({
     #   HTML("<BR/>Please note that values are rounded to", .tsview.shiny.table.format, "significant digits. Download the table as a CSV file to see all digits.")
     # })
-	
+
 })
   }
 

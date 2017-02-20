@@ -1,6 +1,6 @@
 .ui = shiny::fluidPage(theme = getResource("button.css"),
                   shiny::tags$head(shiny::tags$style(".rightAlign{float:right;}")),
-                  shiny::titlePanel(title=shiny::div(shiny::img(src=getResource("cpb-logo.png")), "Time series viewer*")),
+                  shiny::titlePanel(title=shiny::div(shiny::img(src=getResource("cpb-logo.png")), "Time series viewer")),
                   shiny::sidebarLayout(
                     shiny::sidebarPanel(
                       shiny::fluidRow(
@@ -30,9 +30,13 @@
                                            # htmlOutput("helpTextTable")
 #                                           tags$head(tags$style("#helpTextTable{color: lightgray;}"))
                                   ),
-								  			shiny::tabPanel("Info",
-								  			DT::dataTableOutput("info")
-								  )
+        				  				  			shiny::tabPanel("Info",
+				        	  			  			  DT::dataTableOutput("info")
+								                  ),
+                                  shiny::tabPanel(shiny::div(shiny::img(src=getResource("share.png"), height="18px"),"Share"),
+								    shiny::div(shiny::verbatimTextOutput("queryText"), align = "middle")
+                                    # shiny::img(src=getResource("share_coll.jpg"))
+                                  )
                       )
 
                     )
