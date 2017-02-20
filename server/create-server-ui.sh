@@ -38,4 +38,4 @@ do
 done
 
 # Give our 'wrapped server' the shiny server
-echo "shiny::shinyServer(.wrapped_server(x = dget(getDataPath(\"bvar.RData\"))))" >> server.R
+echo "shiny::shinyServer(.wrapped_server(x = dget(getDataPath('bvar.RData'))))" >> server.R
