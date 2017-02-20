@@ -6,7 +6,7 @@
 # get current commit hash
 current_hash=`git ls-remote http://github.com/mdijkstracpb/tsview.git refs/heads/master | cut -f 1`
 
-if [ "$last_hash" == "$current_hash" ]; then
+if [ "$last_hash" = "$current_hash" ]; then
   # exit if no difference
   exit 0;
 else
