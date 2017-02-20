@@ -1,5 +1,4 @@
 # auto deploy server
-cd /home/mdk/server
 
 # get last commit hash
 [ -f last.hash ] && last_hash=`echo last.hash` || last_hash=none
