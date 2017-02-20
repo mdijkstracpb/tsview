@@ -1,13 +1,18 @@
 # auto deploy server
 
 # get last commit hash
-[ -f last.hash ] && last_hash=`echo last.hash` || last_hash=none
+[ -f last.hash ] && last_hash=`cat last.hash` || last_hash=none
 
 # get current commit hash
 current_hash=`git ls-remote http://github.com/mdijkstracpb/tsview.git refs/heads/master | cut -f 1`
 
-# exit if no difference
-[[ last_hash -eq current_hash ]] && exit 0
+if [ "$last_hash" == "$current_hash" ]; then
+  # exit if no difference
+  exit 0;
+else
+  # update hash
+  echo $current_hash > last.hash
+fi
 
 # install package
 R -e 'devtools::install_github("mdijkstracpb/tsview")'
@@ -17,4 +22,4 @@ wget https://raw.githubusercontent.com/mdijkstracpb/tsview/master/server/create-
 bash create-server-ui.sh
 
 # reboot shiny server?
-#sudo reload shiny-server
+# NOT NEEDED: sudo reload shiny-server
