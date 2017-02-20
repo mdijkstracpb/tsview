@@ -1,6 +1,6 @@
 .ui = shiny::fluidPage(theme = getResource("button.css"),
                   shiny::tags$head(shiny::tags$style(".rightAlign{float:right;}")),
-                  shiny::titlePanel(title=shiny::div(shiny::img(src=getResource("cpb-logo.png")), "Time series viewer")),
+                  shiny::titlePanel(title=shiny::div(shiny::img(src=getResource("cpb-logo.png")), "Time series viewer*")),
                   shiny::sidebarLayout(
                     shiny::sidebarPanel(
                       shiny::fluidRow(
