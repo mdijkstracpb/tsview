@@ -144,7 +144,7 @@ observe({
 	{
 		if (is.null(query$sel))
 		{
-			this.selected = x.names
+			this.selected = x.names[1:min(10, length(x.names))]
 		}
 		else
 		{
