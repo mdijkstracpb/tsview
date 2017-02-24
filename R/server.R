@@ -144,7 +144,7 @@ observe({
 	{
 		if (is.null(query$sel))
 		{
-			this.selected = NULL
+			this.selected = x.names
 		}
 		else
 		{
