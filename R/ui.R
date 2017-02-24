@@ -1,3 +1,4 @@
+shiny::addResourcePath("shiny-app", system.file("shiny-app", package = "tsview"))
 .ui = shiny::fluidPage(theme = getResource("button.css"),
                   shiny::tags$head(shiny::tags$style(".rightAlign{float:right;}")),
                   shiny::titlePanel(title=shiny::div(shiny::img(src=getResource("cpb-logo.png")), "Time series viewer")),
