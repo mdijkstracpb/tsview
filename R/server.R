@@ -244,7 +244,7 @@ observe({
 		pathname = session$clientData$url_pathname
 
 		# create base url
-		share.url = paste0(protocol, hostname, ":", port, pathname)
+		share.url = paste0(protocol, "//", hostname, ":", port, pathname)
 
 		url.keys = list()
 
