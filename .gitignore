@@ -2,7 +2,7 @@ packrat/lib*/
 .Rproj.user
 .Rhistory
 bvar/
-inst/shiny-app/data/emu_588.RData
-inst/shiny-app/data/woningmarkt
-inst/shiny-app/data/woningmarkt.RData
-inst/shiny-app/data/bvar.RData
+#inst/shiny-app/data/emu_588.RData
+#inst/shiny-app/data/woningmarkt
+#inst/shiny-app/data/woningmarkt.RData
+#inst/shiny-app/data/bvar.RData
