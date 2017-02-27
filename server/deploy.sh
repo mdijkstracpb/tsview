@@ -31,5 +31,8 @@ R -e 'devtools::install_github("mdijkstracpb/tsview")'
 wget https://raw.githubusercontent.com/mdijkstracpb/tsview/master/server/create-server-ui.sh
 bash create-server-ui.sh
 
+# put data in place
+cp -r ~/shiny-server/data /home/mdk/R/x86_64-pc-linux-gnu-library/3.0/tsview/shiny-app/
+
 # reboot shiny server?
 # NOT NEEDED: sudo reload shiny-server
